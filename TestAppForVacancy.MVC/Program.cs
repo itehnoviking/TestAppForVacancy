@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using MediatR;
+using TestAppForVacancy.Core.Interfaces.Services;
 using TestAppForVacancy.Data;
+using TestAppForVacancy.Domain.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,18 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<TestAppForVacancyContext>(opt
     => opt.UseSqlServer(connectionString));
+
+Assembly.Load("TestAppForVacancy.CQRS");
+builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
+
+//AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
+builder.Services.AddScoped<IProviderService, ProviderService>();
+
+
 
 var app = builder.Build();
 

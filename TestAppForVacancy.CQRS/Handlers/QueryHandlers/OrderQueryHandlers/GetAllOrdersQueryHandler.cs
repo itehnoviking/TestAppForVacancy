@@ -8,7 +8,7 @@ using TestAppForVacancy.Data;
 
 namespace TestAppForVacancy.CQRS.Handlers.QueryHandlers.OrderQueryHandlers;
 
-public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, OrdersListDto>
+public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, IList<OrderDto>>
 {
     private readonly TestAppForVacancyContext _database;
     private readonly IMapper _mapper;
@@ -19,14 +19,13 @@ public class GetAllOrdersQueryHandler : IRequestHandler<GetAllOrdersQuery, Order
         _mapper = mapper;
     }
 
-    public async Task<OrdersListDto> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
+    public async Task<IList<OrderDto>> Handle(GetAllOrdersQuery request, CancellationToken cancellationToken)
     {
         var list = await _database.Orders
             .AsNoTracking()
-            .OrderByDescending(order => order.Date)
             .ToListAsync(cancellationToken: cancellationToken);
 
-        return _mapper.Map<OrdersListDto>(list);
+        return _mapper.Map<IList<OrderDto>>(list);
         
     }
 }

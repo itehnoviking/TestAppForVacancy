@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -25,6 +27,7 @@
     <ProjectReference Include="..\TestAppForVacancy.Core\TestAppForVacancy.Core.csproj" />
     <ProjectReference Include="..\TestAppForVacancy.CQRS\TestAppForVacancy.CQRS.csproj" />
     <ProjectReference Include="..\TestAppForVacancy.Data\TestAppForVacancy.Data.csproj" />
+    <ProjectReference Include="..\TestAppForVacancy.Domain\TestAppForVacancy.Domain.csproj" />
   </ItemGroup>
 
 </Project>
