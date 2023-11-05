@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestAppForVacancy.Core\TestAppForVacancy.Core.csproj" />
+    <ProjectReference Include="..\TestAppForVacancy.CQRS\TestAppForVacancy.CQRS.csproj" />
     <ProjectReference Include="..\TestAppForVacancy.Data\TestAppForVacancy.Data.csproj" />
   </ItemGroup>
 

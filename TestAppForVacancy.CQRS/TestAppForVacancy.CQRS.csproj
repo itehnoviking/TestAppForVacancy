@@ -7,10 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\CommandHandlers\" />
-    <Folder Include="Handlers\QueryHandlers\" />
-    <Folder Include="Models\Commands\" />
-    <Folder Include="Models\Queries\" />
+    <Folder Include="Models\Commands\OrderCommands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestAppForVacancy.Core\TestAppForVacancy.Core.csproj" />
+    <ProjectReference Include="..\TestAppForVacancy.Data\TestAppForVacancy.Data.csproj" />
   </ItemGroup>
 
 </Project>

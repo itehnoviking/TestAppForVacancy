@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TestAppForVacancy.Core\TestAppForVacancy.Core.csproj" />
+    <ProjectReference Include="..\TestAppForVacancy.CQRS\TestAppForVacancy.CQRS.csproj" />
   </ItemGroup>
 
 </Project>
