@@ -4,6 +4,7 @@ using AutoMapper;
 using TestAppForVacancy.Core.Interfaces.Services;
 using TestAppForVacancy.MVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using TestAppForVacancy.Core.DTO;
 
 namespace TestAppForVacancy.MVC.Controllers
 {
@@ -49,6 +50,31 @@ namespace TestAppForVacancy.MVC.Controllers
                 if (viewModel != null)
                 {
                     return View(viewModel);
+                }
+
+                else
+                {
+                    throw new ArgumentException();
+                }
+            }
+            catch (Exception e)
+            {
+                //Log.Fatal(e, $"{e.Message} \n Stack trace:{e.StackTrace}");
+
+                return BadRequest();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(OrderCreateViewModel viewModel)
+        {
+            try
+            {
+                await _orderService.CreateOrderAsync(_mapper.Map<OrderDto>(viewModel));
+
+                if (viewModel != null)
+                {
+                    return RedirectToAction("Index", "Order");
                 }
 
                 else

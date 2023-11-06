@@ -1,12 +1,24 @@
-﻿using TestAppForVacancy.Core.DTO;
+﻿using MediatR;
+using TestAppForVacancy.Core.DTO;
 using TestAppForVacancy.Core.Interfaces.Services;
+using TestAppForVacancy.CQRS.Models.Queries.OrderItemQuery;
+using TestAppForVacancy.CQRS.Models.Queries.ProviderQueries;
 
 namespace TestAppForVacancy.Domain.Services;
 
 public class ProviderService : IProviderService
 {
+    private readonly IMediator _mediator;
+
+    public ProviderService(IMediator mediator)
+    {
+        _mediator = mediator;
+    }
+
     public Task<IList<ProviderNameAndIdDto>> GetAllProviderNameAndId()
     {
-        throw new NotImplementedException();
+        var providerItemNameAndIdDto = _mediator.Send(new GetAllProviderNameAndIdQuery(), new CancellationToken());
+
+        return providerItemNameAndIdDto;
     }
 }

@@ -1,0 +1,41 @@
+﻿@model OrderCreateViewModel
+
+
+
+<div class="container">
+    <h2>Create Order</h2>
+    <div class="row gx-5">
+        <form asp-controller="Order" asp-action="Create" asp-antiforgery="true" method="post">
+            <div>
+                <div class="mb-3">
+                    <label class="col-sm-2 col-form-label" asp-for="Number"></label>
+                    <input class="form-control" type="text" asp-for="Number">
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.ProviderId, "Provider")
+                    <select asp-for="ProviderId" asp-items="Model.ProviderNameAndIdModels">
+                        <option selected="selected" disabled="disabled">Select Provider</option>
+                    </select>
+                    <span asp-validation-for="ProviderId"></span>
+                </div>
+                
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.OrderItems, "OrderItems")
+                    <select asp-for="OrderItems" asp-items="Model.OrderItemsNameAndIdModels">
+                        <option selected="selected" disabled="disabled">Select OrderItems</option>
+                    </select>
+                    <span asp-validation-for="OrderItems"></span>
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label class="col-sm-2 col-form-label" asp-for="Date"></label>
+                    <input type="datetime-local" class="form-control" asp-for="Date">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
