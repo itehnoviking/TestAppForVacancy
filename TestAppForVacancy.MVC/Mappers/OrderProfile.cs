@@ -18,6 +18,10 @@ public class OrderProfile : Profile
 
         CreateMap<OrderCreateViewModel, OrderDto>().ReverseMap();
         CreateMap<OrderListViewModel, OrderDto>().ReverseMap();
+        CreateMap<OrderWithOrderItemsDetailViewModel, OrderDto>().ReverseMap();
+
+        CreateMap<OrderDto, OrderDeleteViewModel>().ReverseMap();
+        CreateMap<OrderDto, OrderEditViewModel>().ReverseMap();
     }
     
 }

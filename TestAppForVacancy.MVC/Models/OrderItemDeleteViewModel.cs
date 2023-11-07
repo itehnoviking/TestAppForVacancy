@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace TestAppForVacancy.MVC.Models;
 
-namespace TestAppForVacancy.Core.DTO;
-
-public class OrderItemDto
+public class OrderItemDeleteViewModel
 {
     public string Name { get; set; }
     public decimal Quantity { get; set; }

@@ -6,6 +6,7 @@ public interface IOrderService
 {
     Task CreateOrderAsync(OrderDto dto);
     Task<IList<OrderDto>> GetAllOrdersAsync();
-    Task<OrderDto> GetOrderByIdAsync(int id);
+    Task<OrderDto> GetOrderWithOrderItemById(int id);
     Task DeleteOrderByIdAsync(int id);
+    Task OrderUpdateAsync(OrderDto order);
 }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using TestAppForVacancy.Core.DTO;
-using TestAppForVacancy.Data.Entities;
 
 namespace TestAppForVacancy.MVC.Models;
 
-public class OrderCreateViewModel
+public class OrderEditViewModel
 {
     public string Number { get; set; }
     public DateTime Date { get; set; }

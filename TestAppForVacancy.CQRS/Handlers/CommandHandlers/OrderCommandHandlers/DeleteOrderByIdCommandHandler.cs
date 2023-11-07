@@ -20,6 +20,7 @@ public class DeleteOrderByIdCommandHandler : IRequestHandler<DeleteOrderByIdComm
         var order = await _database.Orders
             .AsNoTracking()
             .Where(o => o.Id.Equals(command.Id))
+            .Include(order => order.OrderItems)
             .FirstOrDefaultAsync(cancellationToken);
 
        _database.Orders.Remove(order);

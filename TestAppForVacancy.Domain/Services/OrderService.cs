@@ -26,9 +26,9 @@ public class OrderService : IOrderService
         return listOrdersDto;
     }
 
-    public async Task<OrderDto> GetOrderByIdAsync(int id)
+    public async Task<OrderDto> GetOrderWithOrderItemById(int id)
     {
-        var orderDto = await _mediator.Send(new GetOrderByIdQuery(id), new CancellationToken());
+        var orderDto = await _mediator.Send(new GetOrderWithOrderItemByIdQuery(id), new CancellationToken());
 
         return orderDto;
     }
@@ -36,5 +36,10 @@ public class OrderService : IOrderService
     public async Task DeleteOrderByIdAsync(int id)
     {
         await _mediator.Send(new DeleteOrderByIdCommand(id), new CancellationToken());
+    }
+
+    public async Task OrderUpdateAsync(OrderDto order)
+    {
+        throw new NotImplementedException();
     }
 }

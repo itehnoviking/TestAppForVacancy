@@ -7,19 +7,19 @@ using TestAppForVacancy.Data;
 
 namespace TestAppForVacancy.CQRS.Handlers.QueryHandlers.OrderQueryHandlers;
 
-public class GetOrderByIdQueryHandler : IRequestHandler<GetOrderByIdQuery, OrderDto>
+public class GetOrderWithOrderItemByIdQueryHandler : IRequestHandler<GetOrderWithOrderItemByIdQuery, OrderDto>
 {
     private readonly TestAppForVacancyContext _database;
     private readonly IMapper _mapper;
 
 
-    public GetOrderByIdQueryHandler(TestAppForVacancyContext database, IMapper mapper)
+    public GetOrderWithOrderItemByIdQueryHandler(TestAppForVacancyContext database, IMapper mapper)
     {
         _database = database;
         _mapper = mapper;
     }
 
-    public async Task<OrderDto> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
+    public async Task<OrderDto> Handle(GetOrderWithOrderItemByIdQuery request, CancellationToken cancellationToken)
     {
         var order = await _database.Orders
             .AsNoTracking()

@@ -3,9 +3,9 @@ using TestAppForVacancy.Core.DTO;
 
 namespace TestAppForVacancy.CQRS.Models.Queries.OrderQueries;
 
-public class GetOrderByIdQuery : IRequest<OrderDto>
+public class GetOrderWithOrderItemByIdQuery : IRequest<OrderDto>
 {
-    public GetOrderByIdQuery(int id)
+    public GetOrderWithOrderItemByIdQuery(int id)
     {
         Id = id;
     }
