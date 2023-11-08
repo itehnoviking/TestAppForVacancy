@@ -6,6 +6,7 @@ using TestAppForVacancy.MVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TestAppForVacancy.Core.DTO;
 using TestAppForVacancy.Data.Entities;
+using TestAppForVacancy.Domain.Services;
 
 namespace TestAppForVacancy.MVC.Controllers
 {
@@ -231,4 +232,8 @@ namespace TestAppForVacancy.MVC.Controllers
 
         }
     }
+
+   
+
+
 }

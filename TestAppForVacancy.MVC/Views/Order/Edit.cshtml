@@ -4,8 +4,8 @@
     <h2>Edit article</h2>
     <div class="row gx-5">
         <form asp-controller="Order" asp-action="Edit" asp-antiforgery="true" method="post">
+
             <div>
-                @* <input type="hidden" asp-for="Id" /> *@
                 <div class="mb-3">
                     <label class="col-sm-2 col-form-label" asp-for="Number"></label>
                     <input class="form-control" type="text" asp-for="Number">
@@ -21,16 +21,14 @@
                     </select>
                     <span asp-validation-for="ProviderId"></span>
                 </div>
-                
+
                 <div>
                     <h5>OrderItems</h5>
                     <div class="container">
-                        <div class="mb-3">
-                            <!-- Ваши существующие поля формы -->
-
+                        <div id="editButtons" class="mb-3">
                             @foreach (var orderItem in @Model.OrderItems)
                             {
-                                <div class="offset-2 col-8">
+                                <div class="offset-2 col-8 order-item">
                                     <div class="card">
                                         <h5 class="card-title">@orderItem.Name</h5>
                                         <div class="card-body">
@@ -39,45 +37,60 @@
                                         <div class="card-footer text-muted">
                                             Unit: @orderItem.Unit
                                         </div>
-                                        <button class="editButton">Редактировать</button>
-                                        <button class="removeButton">Удалить</button>
+                                        <button type="button" class="editButton">Edit</button>
+                                        <button type="button" class="removeButton">Delete</button>
                                     </div>
                                 </div>
                             }
+                            <div id="orderItemsWrapper" class="row gx-5">
+                                <div>
+                                    <input type="text" name="OrderItems[0].Name" class="item-name" />
+                                    <input type="text" name="OrderItems[0].Quantity" class="item-quantity" />
+                                    <input type="text" name="OrderItems[0].Unit" class="item-unit" />
+                                    <a href="#" class="removeButton">Remove</a>
+                                </div>
+                            </div>
                             <button id="addButton" type="button" class="btn btn-outline-secondary">Add Order Item</button>
                         </div>
                     </div>
-
                 </div>
-                
+
+
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+
     </div>
 </div>
 
-                                    
-                                    
+
+
 @section Scripts
     {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Получаем элементы DOM
             var orderItemsWrapper = document.getElementById("orderItemsWrapper");
-            var editButtons = document.querySelectorAll(".editButton");
+            var editButtons = document.querySelectorAll("editButton");
             var addButton = document.getElementById("addButton");
 
-            // Добавляем обработчики событий для кнопок "Редактировать"
-            editButtons.forEach(function (button) {
-                button.addEventListener("click", function (e) {
+            editButtons.forEach(function (editButton) {
+                editButton.addEventListener("click", function (e) {
                     e.preventDefault();
-                    // Открываем форму для редактирования OrderItem
-                    // ...
+
+                    var orderItemDiv = editButton.closest('.order-item');
+                    var inputName = orderItemDiv.querySelector('.item-name').textContent;
+                    var inputQuantity = orderItemDiv.querySelector('.item-quantity').textContent;
+                    var inputUnit = orderItemDiv.querySelector('.item-unit').textContent;
+
+                    var editForm = document.getElementById("editForm");
+                    editForm.querySelector("#editItemName").value = inputName;
+                    editForm.querySelector("#editItemQuantity").value = inputQuantity;
+                    editForm.querySelector("#editItemUnit").value = inputUnit;
+
                 });
             });
 
-            // Добавляем обработчик события для кнопки "Добавить новый OrderItem"
-            addNewButton.addEventListener("click", function (e) {
+            addButton.addEventListener("click", function (e) {
                 e.preventDefault();
                 var newIndex = orderItemsWrapper.children.length;
                 var newOrderItemDiv = document.createElement("div");
@@ -107,7 +120,6 @@
                 orderItemsWrapper.appendChild(newOrderItemDiv);
             });
 
-            // Добавляем обработчик события для удаления OrderItem
             orderItemsWrapper.addEventListener("click", function (e) {
                 if (e.target.classList.contains("removeButton")) {
                     e.preventDefault();
@@ -115,6 +127,8 @@
                 }
             });
         });
+
+
     </script>
 
 }
