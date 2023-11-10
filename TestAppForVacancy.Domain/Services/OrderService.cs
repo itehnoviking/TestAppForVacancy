@@ -38,8 +38,8 @@ public class OrderService : IOrderService
         await _mediator.Send(new DeleteOrderByIdCommand(id), new CancellationToken());
     }
 
-    public async Task OrderUpdateAsync(OrderDto order)
+    public async Task OrderUpdateAsync(OrderDto orderDto)
     {
-        throw new NotImplementedException();
+        await _mediator.Send(new EditOrderCommand(orderDto), new CancellationToken());
     }
 }

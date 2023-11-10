@@ -97,6 +97,14 @@ namespace TestAppForVacancy.MVC.Controllers
         {
             try
             {
+                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number);
+
+                if (checkForUniqueOrderName)
+                {
+                    return StatusCode(412,
+                        $"{viewModel.Number} already exists with this provider. You must use a different order number.");
+                }
+
                 await _orderService.CreateOrderAsync(_mapper.Map<OrderDto>(viewModel));
 
                 if (viewModel != null)
@@ -178,9 +186,9 @@ namespace TestAppForVacancy.MVC.Controllers
             {
                 var orderDto = await _orderService.GetOrderWithOrderItemById(id);
                 var orderEditViewModel = _mapper.Map<OrderEditViewModel>(orderDto);
+                orderEditViewModel.Id = id;
 
                 var providers = await _providerService.GetAllProviderNameAndId();
-
 
                 orderEditViewModel.ProviderNameAndIdModels = providers.Select(provider =>
                     new SelectListItem(provider.Name, provider.Id.ToString()));
@@ -210,11 +218,21 @@ namespace TestAppForVacancy.MVC.Controllers
         {
             try
             {
-                await _orderService.OrderUpdateAsync(_mapper.Map<OrderDto>(viewModel));
+                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number);
+
+                if (checkForUniqueOrderName)
+                {
+                    return StatusCode(412,
+                        $"{viewModel.Number} already exists with this provider. You must use a different order number.");
+                }
+
+                var orderDto = _mapper.Map<OrderDto>(viewModel);
+
+                await _orderService.OrderUpdateAsync(orderDto);
 
                 if (viewModel != null)
                 {
-                    return RedirectToAction("Index", "Article");
+                    return RedirectToAction("Index", "Order");
                 }
 
                 else

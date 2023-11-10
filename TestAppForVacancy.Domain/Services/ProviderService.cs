@@ -15,10 +15,16 @@ public class ProviderService : IProviderService
         _mediator = mediator;
     }
 
-    public Task<IList<ProviderNameAndIdDto>> GetAllProviderNameAndId()
+    public async Task<IList<ProviderNameAndIdDto>> GetAllProviderNameAndId()
     {
-        var providerItemNameAndIdDto = _mediator.Send(new GetAllProviderNameAndIdQuery(), new CancellationToken());
+        var providerItemNameAndIdDto = await _mediator.Send(new GetAllProviderNameAndIdQuery(), new CancellationToken());
 
         return providerItemNameAndIdDto;
+    }
+
+    public async Task<bool> CheckForUniqueOrderNumber(int providerId, string orderName)
+    {
+        var resultCheckForUniqueOrderName = await _mediator.Send(new CheckForUniqueOrderNumberQuery(providerId, orderName), new CancellationToken());
+        return resultCheckForUniqueOrderName;
     }
 }

@@ -1,0 +1,12 @@
+﻿@model OrderCreateViewModel
+
+
+<div class="container">
+    <p class="lead">
+        @Model.Number already exists with this provider. You must use a different order number.
+    </p>
+
+
+    <a asp-action="Create" asp-controller="Order" class="btn btn-primary">Back</a>
+
+</div>

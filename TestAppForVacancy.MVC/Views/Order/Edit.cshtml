@@ -1,134 +1,129 @@
 ﻿@model OrderEditViewModel
 
-<div class="container">
-    <h2>Edit article</h2>
-    <div class="row gx-5">
-        <form asp-controller="Order" asp-action="Edit" asp-antiforgery="true" method="post">
+@{
+    int a = 0;
 
-            <div>
-                <div class="mb-3">
-                    <label class="col-sm-2 col-form-label" asp-for="Number"></label>
-                    <input class="form-control" type="text" asp-for="Number">
-                </div>
-                <div class="mb-3">
-                    <label class="col-sm-2 col-form-label" asp-for="Date"></label>
-                    <input type="datetime-local" class="form-control" asp-for="Date">
-                </div>
-                <div class="mb-3">
-                    @Html.LabelFor(model => model.ProviderId, "Provider")
-                    <select asp-for="ProviderId" asp-items="Model.ProviderNameAndIdModels">
-                        <option selected="selected" disabled="disabled">Select Provider</option>
-                    </select>
-                    <span asp-validation-for="ProviderId"></span>
-                </div>
+
+
+    <div class="container">
+        <h2>Edit article</h2>
+        <div class="row gx-5">
+            <form asp-controller="Order" asp-action="Edit" asp-antiforgery="true" method="post">
 
                 <div>
-                    <h5>OrderItems</h5>
-                    <div class="container">
-                        <div id="editButtons" class="mb-3">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" asp-for="Number"></label>
+                        <input class="form-control" type="text" asp-for="Number">
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-sm-2 col-form-label" asp-for="Date"></label>
+                        <input type="datetime-local" class="form-control" asp-for="Date">
+                    </div>
+                    <div class="mb-3">
+                        @Html.LabelFor(model => model.ProviderId, "Provider")
+                        <select asp-for="ProviderId" asp-items="Model.ProviderNameAndIdModels">
+                            <option selected="selected" disabled="disabled">Select Provider</option>
+                        </select>
+                        <span asp-validation-for="ProviderId"></span>
+                    </div>
+
+                    <div>
+                        <h2>Order Items</h2>
+                        <div class="mb-3">
+
                             @foreach (var orderItem in @Model.OrderItems)
                             {
-                                <div class="offset-2 col-8 order-item">
-                                    <div class="card">
-                                        <h5 class="card-title">@orderItem.Name</h5>
-                                        <div class="card-body">
-                                            Quantity: @orderItem.Quantity
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            Unit: @orderItem.Unit
-                                        </div>
-                                        <button type="button" class="editButton">Edit</button>
-                                        <button type="button" class="removeButton">Delete</button>
-                                    </div>
+                                <br/>
+                                <hr/>
+                                <div class="mb-3">
+                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Name"></label>
+                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Name" name="OrderItems[@a].Name">
+                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Quantity"></label>
+                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Quantity" name="OrderItems[@a].Quantity">
+                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Unit"></label>
+                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Unit" name="OrderItems[@a].Unit">
                                 </div>
+
+                                a++;
                             }
                             <div id="orderItemsWrapper" class="row gx-5">
                                 <div>
-                                    <input type="text" name="OrderItems[0].Name" class="item-name" />
-                                    <input type="text" name="OrderItems[0].Quantity" class="item-quantity" />
-                                    <input type="text" name="OrderItems[0].Unit" class="item-unit" />
+                                    <input type="text" name="OrderItems[@a].Name"/>
+                                    <input type="text" name="OrderItems[@a].Quantity"/>
+                                    <input type="text" name="OrderItems[@a].Unit"/>
                                     <a href="#" class="removeButton">Remove</a>
                                 </div>
                             </div>
+
+
                             <button id="addButton" type="button" class="btn btn-outline-secondary">Add Order Item</button>
+
                         </div>
                     </div>
+
+
                 </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
 
-
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-
+        </div>
     </div>
-</div>
 
 
 
-@section Scripts
-    {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var orderItemsWrapper = document.getElementById("orderItemsWrapper");
-            var editButtons = document.querySelectorAll("editButton");
-            var addButton = document.getElementById("addButton");
 
-            editButtons.forEach(function (editButton) {
-                editButton.addEventListener("click", function (e) {
+    @section Scripts
+        {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var addButton = document.getElementById("addButton");
+                var orderItemsWrapper = document.getElementById("orderItemsWrapper");
+
+                addButton.addEventListener("click", function (e) {
                     e.preventDefault();
 
-                    var orderItemDiv = editButton.closest('.order-item');
-                    var inputName = orderItemDiv.querySelector('.item-name').textContent;
-                    var inputQuantity = orderItemDiv.querySelector('.item-quantity').textContent;
-                    var inputUnit = orderItemDiv.querySelector('.item-unit').textContent;
+                    var newIndex = @a + 1;
+                    var newOrderItemDiv = document.createElement("div");
+                    newOrderItemDiv.classList.add("order-item");
 
-                    var editForm = document.getElementById("editForm");
-                    editForm.querySelector("#editItemName").value = inputName;
-                    editForm.querySelector("#editItemQuantity").value = inputQuantity;
-                    editForm.querySelector("#editItemUnit").value = inputUnit;
+                    var inputName = document.createElement("input");
+                    inputName.setAttribute("type", "text");
+                    inputName.setAttribute("name", "OrderItems[" + newIndex + "].Name");
+                    newOrderItemDiv.appendChild(inputName);
 
+                    var inputQuantity = document.createElement("input");
+                    inputQuantity.setAttribute("type", "text");
+                    inputQuantity.setAttribute("name", "OrderItems[" + newIndex + "].Quantity");
+                    newOrderItemDiv.appendChild(inputQuantity);
+
+                    var inputPrice = document.createElement("input");
+                    inputPrice.setAttribute("type", "text");
+                    inputPrice.setAttribute("name", "OrderItems[" + newIndex + "].Unit");
+                    newOrderItemDiv.appendChild(inputPrice);
+
+                    var removeButton = document.createElement("a");
+                    removeButton.setAttribute("href", "#");
+                    removeButton.classList.add("removeButton");
+                    removeButton.textContent = "Remove";
+                    newOrderItemDiv.appendChild(removeButton);
+
+                    orderItemsWrapper.appendChild(newOrderItemDiv);
+                });
+
+                orderItemsWrapper.addEventListener("click", function (e) {
+                    if (e.target.classList.contains("removeButton")) {
+                        e.preventDefault();
+                        e.target.parentElement.remove();
+                    }
                 });
             });
+        </script>
 
-            addButton.addEventListener("click", function (e) {
-                e.preventDefault();
-                var newIndex = orderItemsWrapper.children.length;
-                var newOrderItemDiv = document.createElement("div");
-                newOrderItemDiv.classList.add("order-item");
-
-                var inputName = document.createElement("input");
-                inputName.setAttribute("type", "text");
-                inputName.setAttribute("name", "OrderItems[" + newIndex + "].Name");
-                newOrderItemDiv.appendChild(inputName);
-
-                var inputQuantity = document.createElement("input");
-                inputQuantity.setAttribute("type", "text");
-                inputQuantity.setAttribute("name", "OrderItems[" + newIndex + "].Quantity");
-                newOrderItemDiv.appendChild(inputQuantity);
-
-                var inputPrice = document.createElement("input");
-                inputPrice.setAttribute("type", "text");
-                inputPrice.setAttribute("name", "OrderItems[" + newIndex + "].Unit");
-                newOrderItemDiv.appendChild(inputPrice);
-
-                var removeButton = document.createElement("a");
-                removeButton.setAttribute("href", "#");
-                removeButton.classList.add("removeButton");
-                removeButton.textContent = "Remove";
-                newOrderItemDiv.appendChild(removeButton);
-
-                orderItemsWrapper.appendChild(newOrderItemDiv);
-            });
-
-            orderItemsWrapper.addEventListener("click", function (e) {
-                if (e.target.classList.contains("removeButton")) {
-                    e.preventDefault();
-                    e.target.parentElement.remove();
-                }
-            });
-        });
-
-
-    </script>
-
+    }
 }
+
+
+
+
+
