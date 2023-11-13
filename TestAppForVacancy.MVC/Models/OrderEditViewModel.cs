@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using TestAppForVacancy.Data.Entities;
+using TestAppForVacancy.MVC.AttributeValidation;
 
 namespace TestAppForVacancy.MVC.Models;
 
-public class OrderEditViewModel
+public class OrderEditViewModel : BaseEditAndCreateModel
 {
-    public int Id { get; set; }
-    public string Number { get; set; }
-    public DateTime Date { get; set; }
-    public int ProviderId { get; set; }
-    public IList<OrderItemViewModel> OrderItems { get; set; }
-    public IEnumerable<SelectListItem> ProviderNameAndIdModels { get; set; }
+    
 }

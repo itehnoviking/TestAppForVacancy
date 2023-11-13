@@ -15,6 +15,7 @@
                     <div class="mb-3">
                         <label class="col-sm-2 col-form-label" asp-for="Number"></label>
                         <input class="form-control" type="text" asp-for="Number">
+                        <span asp-validation-for="Number" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="col-sm-2 col-form-label" asp-for="Date"></label>
@@ -30,28 +31,32 @@
 
                     <div>
                         <h2>Order Items</h2>
-                        <div class="mb-3">
+                        <div id="orderItemsWrapper" class="mb-3">
 
-                            @foreach (var orderItem in @Model.OrderItems)
-                            {
-                                <br/>
-                                <hr/>
-                                <div class="mb-3">
-                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Name"></label>
-                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Name" name="OrderItems[@a].Name">
-                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Quantity"></label>
-                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Quantity" name="OrderItems[@a].Quantity">
-                                    <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Unit"></label>
-                                    <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Unit" name="OrderItems[@a].Unit">
-                                </div>
+                            
+                                @foreach (var orderItem in @Model.OrderItems)
+                                {
+                                    <br />
+                                    <hr />
+                                    <div class="mb-3">
+                                        <input type="hidden" asp-for="@Model.OrderItems[a].Id" />
+                                        <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Name"></label>
+                                        <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Name" name="OrderItems[@a].Name">
+                                        <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Quantity"></label>
+                                        <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Quantity" name="OrderItems[@a].Quantity">
+                                        <label class="col-sm-2 col-form-label" asp-for="@Model.OrderItems[a].Unit"></label>
+                                        <input class="form-control" type="text" asp-for="@Model.OrderItems[a].Unit" name="OrderItems[@a].Unit">
+                                        <a href="#" class="removeButton">Remove</a>
+                                    </div>
 
-                                a++;
-                            }
-                            <div id="orderItemsWrapper" class="row gx-5">
+                                    a++;
+                                }
+                            
+                            <div class="row gx-5">
                                 <div>
-                                    <input type="text" name="OrderItems[@a].Name"/>
-                                    <input type="text" name="OrderItems[@a].Quantity"/>
-                                    <input type="text" name="OrderItems[@a].Unit"/>
+                                    <input type="text" name="OrderItems[@a].Name" />
+                                    <input type="text" name="OrderItems[@a].Quantity" />
+                                    <input type="text" name="OrderItems[@a].Unit" />
                                     <a href="#" class="removeButton">Remove</a>
                                 </div>
                             </div>
@@ -84,8 +89,11 @@
                     e.preventDefault();
 
                     var newIndex = @a + 1;
+
+
                     var newOrderItemDiv = document.createElement("div");
                     newOrderItemDiv.classList.add("order-item");
+
 
                     var inputName = document.createElement("input");
                     inputName.setAttribute("type", "text");

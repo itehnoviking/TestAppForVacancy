@@ -22,9 +22,9 @@ public class ProviderService : IProviderService
         return providerItemNameAndIdDto;
     }
 
-    public async Task<bool> CheckForUniqueOrderNumber(int providerId, string orderName)
+    public async Task<bool> CheckForUniqueOrderNumber(int providerId, string orderName, int orderId)
     {
-        var resultCheckForUniqueOrderName = await _mediator.Send(new CheckForUniqueOrderNumberQuery(providerId, orderName), new CancellationToken());
+        var resultCheckForUniqueOrderName = await _mediator.Send(new CheckForUniqueOrderNumberQuery(providerId, orderName, orderId), new CancellationToken());
         return resultCheckForUniqueOrderName;
     }
 }

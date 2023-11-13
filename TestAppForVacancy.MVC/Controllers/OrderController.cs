@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using AutoMapper;
 using TestAppForVacancy.Core.Interfaces.Services;
@@ -97,7 +98,17 @@ namespace TestAppForVacancy.MVC.Controllers
         {
             try
             {
-                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number);
+                var validationResults = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(viewModel, new ValidationContext(viewModel), validationResults, true))
+                {
+                    foreach (var validationResult in validationResults)
+                    {
+                        ModelState.AddModelError(validationResult.MemberNames.FirstOrDefault() ?? "", validationResult.ErrorMessage);
+                    }
+                    return View(viewModel);
+                }
+
+                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number, viewModel.Id);
 
                 if (checkForUniqueOrderName)
                 {
@@ -218,7 +229,17 @@ namespace TestAppForVacancy.MVC.Controllers
         {
             try
             {
-                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number);
+                var validationResults = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(viewModel, new ValidationContext(viewModel), validationResults, true))
+                {
+                    foreach (var validationResult in validationResults)
+                    {
+                        ModelState.AddModelError(validationResult.MemberNames.FirstOrDefault() ?? "", validationResult.ErrorMessage);
+                    }
+                    return View(viewModel);
+                }
+
+                var checkForUniqueOrderName = await _providerService.CheckForUniqueOrderNumber(viewModel.ProviderId, viewModel.Number, viewModel.Id);
 
                 if (checkForUniqueOrderName)
                 {
@@ -246,12 +267,18 @@ namespace TestAppForVacancy.MVC.Controllers
 
                 return BadRequest();
             }
-
-
         }
+        
+
+
+
+
+       
+
+
     }
+}
 
    
 
 
-}

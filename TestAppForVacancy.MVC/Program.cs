@@ -21,7 +21,7 @@ builder.Services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 //AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IProviderService, ProviderService>();
 

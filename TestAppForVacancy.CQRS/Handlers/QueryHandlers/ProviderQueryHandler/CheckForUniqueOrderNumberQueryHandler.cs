@@ -16,11 +16,16 @@ public class CheckForUniqueOrderNumberQueryHandler : IRequestHandler<CheckForUni
 
     public async Task<bool> Handle(CheckForUniqueOrderNumberQuery request, CancellationToken cancellationToken)
     {
-        var provider = await _database.Providers.Where(p => p.Id.Equals(request.ProviderId))
+        var provider = await _database.Providers
+            .AsNoTracking()
+            .Where(p => p.Id.Equals(request.ProviderId))
             .Include(p => p.Orders)
             .FirstOrDefaultAsync(cancellationToken: cancellationToken);
 
-        var result = provider.Orders.Select(o => o.Number).Contains(request.NumberOrder);
+        var result = provider.Orders
+            .Where(o => !o.Id.Equals(request.OrderId))
+            .Select(o => o.Number)
+            .Contains(request.NumberOrder);
 
         return result;
     }
