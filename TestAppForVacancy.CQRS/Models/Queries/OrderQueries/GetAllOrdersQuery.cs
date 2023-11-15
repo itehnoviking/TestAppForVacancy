@@ -4,7 +4,7 @@ using TestAppForVacancy.Core.DTO;
 
 namespace TestAppForVacancy.CQRS.Models.Queries.OrderQueries;
 
-public class GetAllOrdersQuery : IRequest<IList<OrderDto>>
+public class GetAllOrdersQuery : IRequest<OrderListDto>
 {
     
 }

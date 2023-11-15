@@ -20,7 +20,7 @@ public class OrderService : IOrderService
         await _mediator.Send(new CreateOrderCommand(dto), new CancellationToken());
     }
 
-    public async Task<IList<OrderDto>> GetAllOrdersAsync()
+    public async Task<OrderListDto> GetAllOrdersAsync()
     {
         var listOrdersDto = await _mediator.Send(new GetAllOrdersQuery(), new CancellationToken());
         return listOrdersDto;
@@ -41,5 +41,12 @@ public class OrderService : IOrderService
     public async Task OrderUpdateAsync(OrderDto orderDto)
     {
         await _mediator.Send(new EditOrderCommand(orderDto), new CancellationToken());
+    }
+
+    public async Task<IList<OrderDto>> GetOrderByFilter(OrderFilterDto dto)
+    {
+        var listOrders = await _mediator.Send(new GetOrderByFilterQuery(dto), new CancellationToken());
+
+        return listOrders;
     }
 }

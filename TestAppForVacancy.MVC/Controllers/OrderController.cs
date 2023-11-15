@@ -28,12 +28,15 @@ namespace TestAppForVacancy.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var orders = (await _orderService.GetAllOrdersAsync())
-                .Select(order => _mapper.Map<OrderListViewModel>(order))
-                .OrderByDescending(order => order.Date)
-                .ToList();
+            var ordersDto = await _orderService.GetAllOrdersAsync();
 
-            return View(orders);
+            var viewModel = _mapper.Map<OrderListViewModel>(ordersDto);
+
+            var providers = await _providerService.GetAllProviderNameAndId();
+
+            viewModel.Providers = providers.Select(p => p.Name).ToList();
+
+            return View(viewModel);
         }
 
         
@@ -268,8 +271,18 @@ namespace TestAppForVacancy.MVC.Controllers
                 return BadRequest();
             }
         }
-        
 
+        [HttpPost]
+        public async Task<IActionResult> OrderFilter(OrderListViewModel viewModel)
+        {
+            var dto = _mapper.Map<OrderFilterDto>(viewModel);
+
+            var orderList = await _orderService.GetOrderByFilter(dto);
+
+            var resultViewModel = _mapper.Map<IList<OrderViewModel>>(orderList);
+
+            return View(resultViewModel);
+        }
 
 
 

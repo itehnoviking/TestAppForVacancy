@@ -1,4 +1,41 @@
-﻿@model IList<OrderListViewModel>
+﻿@model OrderListViewModel
+
+<form asp-controller="Order" asp-action="OrderFilter" asp-antiforgery="true" method="post">
+    <div class="form-group">
+        <label asp-for="FirstDate"></label>
+        <input asp-for="FirstDate" type="datetime-local" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SecondDate"></label>
+        <input asp-for="SecondDate" type="datetime-local" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Numbers"></label>
+        <select asp-for="Numbers" class="form-control" multiple>
+            @foreach (var order in @Model.Orders)
+            {
+                <option value="@order.Number">@order.Number</option>
+            }
+            
+            
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Providers"></label>
+        <select asp-for="Providers" class="form-control" multiple>
+            @foreach (var provider in @Model.Providers)
+            {
+                <option value="@provider">@provider</option>
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 
 
 <table>
@@ -10,7 +47,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in @Model.Orders)
     {
         <tr>
             <td>

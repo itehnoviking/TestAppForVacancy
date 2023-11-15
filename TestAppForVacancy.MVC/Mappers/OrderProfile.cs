@@ -11,8 +11,11 @@ public class OrderProfile : Profile
     public OrderProfile()
     {
         CreateMap<Order, OrderDto>().ReverseMap();
+        CreateMap<OrderDto, OrderViewModel>().ReverseMap();
+        CreateMap<OrderFilterDto, OrderListViewModel>().ReverseMap();
+        CreateMap<OrderFilterDto, Order>().ReverseMap();
 
-        CreateMap<IList<Order>, OrdersListDto>().ReverseMap();
+        CreateMap<OrderListViewModel, OrderListDto>().ReverseMap();
 
         CreateMap<CreateOrderCommand, Order>().ReverseMap();
 
@@ -23,6 +26,10 @@ public class OrderProfile : Profile
         CreateMap<OrderDto, OrderDeleteViewModel>().ReverseMap();
         CreateMap<OrderDto, OrderEditViewModel>().ReverseMap();
         CreateMap<Order, EditOrderCommand>().ReverseMap();
+
+        CreateMap<IList<Order>, OrderListDto>()
+            .ForMember(dest => dest.Orders, opt => opt.MapFrom(src => src));
+    
     }
     
 }

@@ -14,5 +14,6 @@ public class OrderItemProfile : Profile
 
         CreateMap<OrderItemDto, OrderItemDeleteViewModel>().ReverseMap();
         CreateMap<OrderItemDto, OrderItemViewModel>().ReverseMap();
+        CreateMap<OrderItemFilterDto, OrderItemFilterViewModel>().ReverseMap();
     }
 }

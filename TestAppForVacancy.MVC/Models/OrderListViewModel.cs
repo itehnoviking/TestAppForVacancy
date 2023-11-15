@@ -1,9 +1,13 @@
-﻿namespace TestAppForVacancy.MVC.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace TestAppForVacancy.MVC.Models;
 
 public class OrderListViewModel
 {
-    public int Id { get; set; }
-    public string Number { get; set; }
-    public DateTime Date { get; set; }
-    public int ProviderId { get; set; }
+    public IList<OrderViewModel> Orders { get; set; }
+
+    public DateTime FirstDate { get; set; } = DateTime.Now.AddMonths(-1);
+    public DateTime SecondDate { get; set; } = DateTime.Now;
+    public IList<string> Numbers { get; set; }
+    public IList<string> Providers { get; set; }
 }
